@@ -1,0 +1,99 @@
+<%- include('partials/header') %>
+<main class="container mt-5">
+    <h2 class="mb-4">Contact Us</h2>
+    
+    <!-- Error Messages -->
+    <% if (error) { %>
+        <div class="alert alert-danger">Failed to submit form. Please try again.</div>
+    <% } %>
+    
+    <% if (errors) { %>
+        <div class="alert alert-danger">
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="/contact" method="POST">
+                <!-- Name Field -->
+                <div class="mb-3">
+                    <label class="form-label">Name*</label>
+                    <input type="text" class="form-control <%= errors?.some(e => e.path === 'name') ? 'is-invalid' : '' %>" 
+                           name="name" value="<%= formData?.name || '' %>" required>
+                    <% if (errors?.some(e => e.path === 'name')) { %>
+                        <div class="invalid-feedback">
+                            <%= errors.find(e => e.path === 'name').msg %>
+                        </div>
+                    <% } %>
+                </div>
+
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label class="form-label">Email*</label>
+                    <input type="email" class="form-control <%= errors?.some(e => e.path === 'email') ? 'is-invalid' : '' %>" 
+                           name="email" value="<%= formData?.email || '' %>" required>
+                    <% if (errors?.some(e => e.path === 'email')) { %>
+                        <div class="invalid-feedback">
+                            <%= errors.find(e => e.path === 'email').msg %>
+                        </div>
+                    <% } %>
+                </div>
+
+                <!-- Phone Field -->
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control <%= errors?.some(e => e.path === 'phone') ? 'is-invalid' : '' %>" 
+                           name="phone" value="<%= formData?.phone || '' %>">
+                    <% if (errors?.some(e => e.path === 'phone')) { %>
+                        <div class="invalid-feedback">
+                            <%= errors.find(e => e.path === 'phone').msg %>
+                        </div>
+                    <% } %>
+                </div>
+
+        <!-- Message Field -->
+        <div class="mb-3">
+            <label class="form-label">Message*</label>
+                <textarea id="message-editor" class="form-control" name="message" required><%= formData?.message || '' %></textarea>
+            <% if (errors?.some(e => e.path === 'message')) { %>
+                <div class="invalid-feedback d-block">
+                <%= errors.find(e => e.path === 'message').msg %>
+                </div>
+            <% } %>
+            </div>
+
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Contact Information</h4>
+                    <div class="mb-3">
+                        <i class="bi bi-geo-alt-fill me-2"></i>
+                        <span>123 Howard Ave, Dorchester, MA</span>
+                    </div>
+                    <div class="mb-3">
+                        <i class="bi bi-telephone-fill me-2"></i>
+                        <span>857-385-2270</span>
+                    </div>
+                    <div class="mb-3">
+                        <i class="bi bi-envelope-fill me-2"></i>
+                        <span>leiteruiz37@gmail.com</span>
+                    </div>
+                    <hr>
+                    <h5>Business Hours</h5>
+                    <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                    <p>Saturday: 9:00 AM - 5:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include('partials/footer') %>

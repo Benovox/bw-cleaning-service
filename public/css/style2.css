@@ -1,0 +1,101 @@
+/* Add these styles to your existing style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('/image/room.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+/* Overlay to make text readable on background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: lightslategray;
+    z-index: -1;
+}
+
+/* Hero section adjustments */
+.hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                      url('/image/girl.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
+/* Card styling with images */
+.service-card {
+    height: 100%;
+    transition: transform 0.3s;
+    overflow: hidden;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/*carousel*/
+
+.carousel-item {
+    height: 600px;
+    background-color: #777;
+}
+.carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+.carousel-caption {
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+/* Portfolio cards */
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Modal carousel */
+.modal-carousel .carousel-item {
+    height: auto;
+}
+/* Carousel Enhancements */
+.carousel {
+    overflow: hidden;
+}
+
+.carousel-fade .carousel-item {
+    transition: opacity 1.5s ease-in-out !important;
+    opacity: 0;
+}
+
+.carousel-fade .carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    height: 70vh;
+    width: 100%;
+}
+
+.carousel-caption {
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 1rem;
+    padding: 2rem;
+    bottom: 25%;
+}

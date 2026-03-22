@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+<main>
+    <!-- Hero Carousel (Updated Version) -->
+    <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="false">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/images/carousel/c1.png" class="d-block w-100" alt="Professional Cleaning Team">
+                <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInDown">
+                    <h2 class="display-4 fw-bold">B&W Cleaning Services</h2>
+                    <p class="lead fs-5">Professional cleaning services since 2024</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/images/carousel/c2.png" class="d-block w-100" alt="Commercial Cleaning">
+                <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInRight">
+                    <h2 class="display-4 fw-bold">Commercial & Residential Cleaning Experts</h2>
+                    <p class="lead fs-5">Customized cleaning solutions for every space</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/images/carousel/c3.png" class="d-block w-100" alt="Eco-Friendly Cleaning">
+                <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp">
+                    <h2 class="display-4 fw-bold">Eco-Friendly Cleaning Products</h2>
+                    <p class="lead fs-5">Safe for your family, pets, and the environment</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- Company Introduction -->
+    <section class="container my-5 py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="display-5 fw-bold mb-4 text-primary">Why Choose B&W Cleaning Services?</h2>
+                <p class="lead">Founded in 2024, B&W Cleaning Services has quickly become a trusted name in professional cleaning across the region. We specialize in delivering spotless results for homes and businesses with unmatched reliability and care.</p>
+                <p>Our certified team ensures exceptional quality through:</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Comprehensive training and expertise</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Premium eco-friendly cleaning products</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Tailored cleaning plans for your needs</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> 100% satisfaction guarantee</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Reliable, punctual service</li>
+                </ul>
+                <a href="/services" class="btn btn-primary btn-lg mt-3 px-4 py-2 fw-bold">Explore Our Services</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="/images/garden.jpg" class="img-fluid rounded shadow" alt="Our Team" loading="lazy">
+            </div>
+        </div>
+    </section>
+</main>
+<%- include('partials/footer') %>
