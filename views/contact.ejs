@@ -1,7 +1,12 @@
 <%- include('partials/header') %>
 <main class="container mt-5">
     <h2 class="mb-4">Contact Us</h2>
-    
+
+    <!-- DEBUG: contact template variables -->
+    <div class="mb-3">
+      <small class="text-secondary">DEBUG: success=<%= success %> | error=<%= error %> | template=contact.ejs</small>
+    </div>
+
     <!-- Success Message -->
     <% if (success && success === 'true') { %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">

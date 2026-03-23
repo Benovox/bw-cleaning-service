@@ -1,11 +1,14 @@
 const nodemailer = require('nodemailer');
 
 exports.submitContact = async (req, res) => {
+  console.log('DEBUG contactController.submitContact: hit POST /contact');
+  console.log('DEBUG req.body:', req.body);
   try {
     const { name, email, phone, message } = req.body;
 
     // Server-side validation
     if (!name?.trim() || !email?.trim() || !message?.trim()) {
+      console.log('DEBUG contactController: validation failed (missing required field)');
       return res.redirect('/contact?error=true');
     }
 
@@ -49,12 +52,15 @@ exports.submitContact = async (req, res) => {
 
     // Send email
     await transporter.sendMail(mailOptions);
-
-    // Success
-    res.redirect('/contact?success=true');
+    console.log('DEBUG contactController: Nodemailer sendMail succeeded');
+    const successUrl = '/contact?success=true';
+    console.log('DEBUG redirecting to:', successUrl);
+    return res.redirect(successUrl);
 
   } catch (error) {
     console.error('Contact submission error:', error);
-    res.redirect('/contact?error=true');
+    const errorUrl = '/contact?error=true';
+    console.log('DEBUG redirecting to:', errorUrl);
+    return res.redirect(errorUrl);
   }
 };
