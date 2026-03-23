@@ -11,7 +11,8 @@ exports.renderServices = (req, res) => {
 
 exports.renderContact = (req, res) => {
   res.render('contact', { 
-    error: null,  // Add this line
+    success: req.query.success,
+    error: req.query.error,
     errors: null,
     formData: null
   });

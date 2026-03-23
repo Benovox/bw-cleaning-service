@@ -2,6 +2,20 @@
 <main class="container mt-5">
     <h2 class="mb-4">Contact Us</h2>
     
+    <!-- Success Message -->
+    <% if (typeof success !== 'undefined' && success === 'true') { %>
+        <div class="alert alert-success" role="alert">
+            Message sent successfully!
+        </div>
+    <% } %>
+    
+    <!-- Error Message -->
+    <% if (typeof error !== 'undefined' && error === 'true') { %>
+        <div class="alert alert-danger" role="alert">
+            Something went wrong. Please try again.
+        </div>
+    <% } %>
+    
     <!-- Error Messages -->
     <% if (error) { %>
         <div class="alert alert-danger">Failed to submit form. Please try again.</div>

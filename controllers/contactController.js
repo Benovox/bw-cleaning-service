@@ -1,69 +1,60 @@
-const Contact = require('../models/Contact');
+const nodemailer = require('nodemailer');
 
 exports.submitContact = async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
-    
+
     // Server-side validation
     if (!name?.trim() || !email?.trim() || !message?.trim()) {
-      return res.render('contact', {
-        error: 'Name, email and message are required',
-        errors: null,
-        formData: req.body
-      });
+      return res.redirect('/contact?error=true');
     }
 
     // Basic email format validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.render('contact', {
-        error: 'Please enter a valid email address',
-        errors: null,
-        formData: req.body
-      });
+      return res.redirect('/contact?error=true');
     }
 
-    const newContact = new Contact({ 
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone?.trim() || null, // Store null if phone is empty
-      message: message.trim(),
-      date: new Date() // Explicit timestamp
+    // Create transporter
+    const transporter = nodemailer.createTransporter({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
     });
 
-    await newContact.save();
-    
-    // Successful submission
-    res.redirect('/?success=true');
-    
+    // Create mail options
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
+      subject: `New Contact Form Message from ${name}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333;">New Contact Form Submission</h2>
+          <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px;">
+            <p><strong>Name:</strong> ${name.trim()}</p>
+            <p><strong>Email:</strong> ${email.trim()}</p>
+            ${phone ? `<p><strong>Phone:</strong> ${phone.trim()}</p>` : ''}
+            <p><strong>Message:</strong></p>
+            <div style="background-color: white; padding: 15px; border-radius: 3px; border-left: 4px solid #007bff;">
+              ${message.trim().replace(/\n/g, '<br>')}
+            </div>
+          </div>
+          <p style="color: #666; font-size: 12px; margin-top: 20px;">
+            This message was sent from your website contact form.
+          </p>
+        </div>
+      `
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+
+    // Success
+    res.redirect('/contact?success=true');
+
   } catch (error) {
     console.error('Contact submission error:', error);
-    
-    // Differentiate between validation and server errors
-    const errorMessage = error.name === 'ValidationError' 
-      ? 'Invalid data provided'
-      : 'Failed to save your message. Please try again.';
-    
-    res.render('contact', {
-      error: errorMessage,
-      errors: error.errors || null,
-      formData: req.body
-    });
-  }
-};
-
-exports.getContacts = async (req, res) => {
-  try {
-    const contacts = await Contact.find()
-      .sort({ date: -1 })
-      .lean(); // Convert to plain JS objects
-    
-    res.render('admin/contacts', { 
-      contacts,
-      error: req.query.error 
-    });
-    
-  } catch (error) {
-    console.error('Error fetching contacts:', error);
-    res.redirect('/?error=fetch_contacts');
+    res.redirect('/contact?error=true');
   }
 };
