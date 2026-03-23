@@ -3,7 +3,7 @@
     <h2 class="mb-4">Contact Us</h2>
     
     <!-- Success Message -->
-    <% if (typeof success !== 'undefined' && success === 'true') { %>
+    <% if (success && success === 'true') { %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Thanks for contacting us!</strong> Your message was sent successfully.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -11,7 +11,7 @@
     <% } %>
     
     <!-- Error Message -->
-    <% if (typeof error !== 'undefined' && error === 'true') { %>
+    <% if (error && error === 'true') { %>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>Sorry,</strong> your message could not be sent. Please try again.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
