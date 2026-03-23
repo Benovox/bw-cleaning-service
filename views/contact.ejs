@@ -4,30 +4,17 @@
     
     <!-- Success Message -->
     <% if (typeof success !== 'undefined' && success === 'true') { %>
-        <div class="alert alert-success" role="alert">
-            Message sent successfully!
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Thanks for contacting us!</strong> Your message was sent successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
     
     <!-- Error Message -->
     <% if (typeof error !== 'undefined' && error === 'true') { %>
-        <div class="alert alert-danger" role="alert">
-            Something went wrong. Please try again.
-        </div>
-    <% } %>
-    
-    <!-- Error Messages -->
-    <% if (error) { %>
-        <div class="alert alert-danger">Failed to submit form. Please try again.</div>
-    <% } %>
-    
-    <% if (errors) { %>
-        <div class="alert alert-danger">
-            <ul>
-                <% errors.forEach(error => { %>
-                    <li><%= error.msg %></li>
-                <% }) %>
-            </ul>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Sorry,</strong> your message could not be sent. Please try again.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
 
