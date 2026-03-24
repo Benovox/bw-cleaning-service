@@ -1,118 +1,50 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.submitContact = async (req, res) => {
-  console.log('DEBUG contactController.submitContact: hit POST /contact');
-  console.log('DEBUG req.body:', req.body);
-
+  console.log('Contact form submitted');
   try {
     const { name, email, phone, message } = req.body;
 
     // Server-side validation
     if (!name?.trim() || !email?.trim() || !message?.trim()) {
-      console.log('DEBUG contactController: validation failed (missing required field)');
+      console.log('Contact validation failed (missing required field)');
       return res.redirect('/contact?error=true');
     }
 
     // Basic email format validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      console.log('DEBUG contactController: validation failed (invalid email format)');
+      console.log('Contact validation failed (invalid email format)');
       return res.redirect('/contact?error=true');
     }
 
     // Check environment variables
-    console.log('DEBUG contactController: checking environment variables...');
-    console.log('DEBUG EMAIL_USER exists:', !!process.env.EMAIL_USER);
-    console.log('DEBUG EMAIL_PASS exists:', !!process.env.EMAIL_PASS);
-
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error('DEBUG contactController: EMAIL_USER or EMAIL_PASS not set');
+    if (!process.env.RESEND_API_KEY || !process.env.CONTACT_TO_EMAIL) {
+      console.error('RESEND_API_KEY or CONTACT_TO_EMAIL not set');
       return res.redirect('/contact?error=true');
     }
 
-    console.log('DEBUG contactController: creating transporter...');
-
-    // Create transporter with explicit SMTP config for Render compatibility
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // Use TLS
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      },
-      // Force IPv4 to avoid Render IPv6 issues
-      tls: {
-        ciphers: 'SSLv3'
-      },
-      debug: true,
-      logger: true
+    // Send email via Resend
+    await resend.emails.send({
+      from: 'B&W Cleaning <onboarding@resend.dev>',
+      to: process.env.CONTACT_TO_EMAIL,
+      subject: `New message from ${name}`,
+      html: `
+        <h2>New Contact Form Message</h2>
+        <p><strong>Name:</strong> ${name.trim()}</p>
+        <p><strong>Email:</strong> ${email.trim()}</p>
+        ${phone ? `<p><strong>Phone:</strong> ${phone.trim()}</p>` : ''}
+        <p><strong>Message:</strong></p>
+        <div>${message.trim().replace(/\n/g, '<br>')}</div>
+      `
     });
 
-    console.log('DEBUG contactController: verifying transporter...');
-
-    // Verify transporter
-    try {
-      await transporter.verify();
-      console.log('DEBUG contactController: transporter verification succeeded');
-    } catch (verifyError) {
-      console.error('DEBUG contactController: transporter verification failed:', {
-        message: verifyError.message,
-        code: verifyError.code,
-        errno: verifyError.errno,
-        syscall: verifyError.syscall,
-        hostname: verifyError.hostname
-      });
-      return res.redirect('/contact?error=true');
-    }
-
-    console.log('DEBUG contactController: creating mail options...');
-
-    // Create mail options
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
-      replyTo: email, // Allow replies to go to the form submitter
-      subject: `New Contact Form Message from ${name}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #333;">New Contact Form Submission</h2>
-          <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px;">
-            <p><strong>Name:</strong> ${name.trim()}</p>
-            <p><strong>Email:</strong> ${email.trim()}</p>
-            ${phone ? `<p><strong>Phone:</strong> ${phone.trim()}</p>` : ''}
-            <p><strong>Message:</strong></p>
-            <div style="background-color: white; padding: 15px; border-radius: 3px; border-left: 4px solid #007bff;">
-              ${message.trim().replace(/\n/g, '<br>')}
-            </div>
-          </div>
-          <p style="color: #666; font-size: 12px; margin-top: 20px;">
-            This message was sent from your website contact form.
-          </p>
-        </div>
-      `
-    };
-
-    console.log('DEBUG contactController: attempting sendMail...');
-
-    // Send email
-    await transporter.sendMail(mailOptions);
-    console.log('DEBUG contactController: Nodemailer sendMail succeeded');
-    const successUrl = '/contact?success=true';
-    console.log('DEBUG redirecting to:', successUrl);
-    return res.redirect(successUrl);
+    console.log('Email sent via Resend');
+    res.redirect('/contact?success=true');
 
   } catch (error) {
-    console.error('DEBUG contactController: Contact submission error details:', {
-      message: error.message,
-      code: error.code,
-      errno: error.errno,
-      syscall: error.syscall,
-      hostname: error.hostname,
-      address: error.address,
-      port: error.port
-    });
-    const errorUrl = '/contact?error=true';
-    console.log('DEBUG redirecting to:', errorUrl);
-    return res.redirect(errorUrl);
+    console.error('Contact submission error:', error.message);
+    res.redirect('/contact?error=true');
   }
 };
