@@ -31,13 +31,21 @@ exports.submitContact = async (req, res) => {
 
     console.log('DEBUG contactController: creating transporter...');
 
-    // Create transporter
+    // Create transporter with explicit SMTP config for Render compatibility
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // Use TLS
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-      }
+      },
+      // Force IPv4 to avoid Render IPv6 issues
+      tls: {
+        ciphers: 'SSLv3'
+      },
+      debug: true,
+      logger: true
     });
 
     console.log('DEBUG contactController: verifying transporter...');
@@ -50,7 +58,9 @@ exports.submitContact = async (req, res) => {
       console.error('DEBUG contactController: transporter verification failed:', {
         message: verifyError.message,
         code: verifyError.code,
-        response: verifyError.response
+        errno: verifyError.errno,
+        syscall: verifyError.syscall,
+        hostname: verifyError.hostname
       });
       return res.redirect('/contact?error=true');
     }
@@ -95,8 +105,11 @@ exports.submitContact = async (req, res) => {
     console.error('DEBUG contactController: Contact submission error details:', {
       message: error.message,
       code: error.code,
-      response: error.response,
-      stack: error.stack
+      errno: error.errno,
+      syscall: error.syscall,
+      hostname: error.hostname,
+      address: error.address,
+      port: error.port
     });
     const errorUrl = '/contact?error=true';
     console.log('DEBUG redirecting to:', errorUrl);
