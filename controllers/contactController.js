@@ -2,17 +2,24 @@ const { Resend } = require('resend');
 
 exports.submitContact = async (req, res) => {
   try {
-    const { name, email, phone, message } = req.body;
+    const {
+      name,
+      phone,
+      email,
+      serviceType,
+      bedrooms,
+      bathrooms,
+      frequency,
+      message
+    } = req.body;
 
     // Server-side validation
-    if (!name?.trim() || !email?.trim() || !message?.trim()) {
-      console.log('Contact validation failed (missing required field)');
+    if (!name?.trim() || !phone?.trim() || !email?.trim() || !serviceType?.trim()) {
       return res.redirect('/contact?error=true');
     }
 
     // Basic email format validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      console.log('Contact validation failed (invalid email format)');
       return res.redirect('/contact?error=true');
     }
 
@@ -30,14 +37,18 @@ exports.submitContact = async (req, res) => {
       from: 'B&W Cleaning <onboarding@resend.dev>',
       to: process.env.CONTACT_TO_EMAIL,
       reply_to: email.trim(),
-      subject: `New message from ${name}`,
+      subject: `Quote Request from ${name}`,
       html: `
-        <h2>New Contact Form Message</h2>
-        <p><strong>Name:</strong> ${name.trim()}</p>
+        <h2>New Quote Request</h2>
+        <p><strong>Full Name:</strong> ${name.trim()}</p>
+        <p><strong>Phone:</strong> ${phone.trim()}</p>
         <p><strong>Email:</strong> ${email.trim()}</p>
-        ${phone ? `<p><strong>Phone:</strong> ${phone.trim()}</p>` : ''}
-        <p><strong>Message:</strong></p>
-        <div>${message.trim().replace(/\n/g, '<br>')}</div>
+        <p><strong>Service Type:</strong> ${serviceType.trim()}</p>
+        <p><strong>Bedrooms:</strong> ${bedrooms || 'Not provided'}</p>
+        <p><strong>Bathrooms:</strong> ${bathrooms || 'Not provided'}</p>
+        <p><strong>Frequency:</strong> ${frequency || 'Not provided'}</p>
+        <p><strong>Notes:</strong></p>
+        <div>${(message || '').trim().replace(/\n/g, '<br>')}</div>
       `
     };
 

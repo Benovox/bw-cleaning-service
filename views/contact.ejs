@@ -1,78 +1,98 @@
 <%- include('partials/header') %>
 <main class="container mt-5">
-    <h2 class="mb-4">Contact Us</h2>
-    
-    <!-- Success Message -->
+    <h2 class="mb-1">Get a Quote</h2>
+    <p class="text-muted mb-4">Tell us about your home and cleaning needs.</p>
+
     <% if (success && success === 'true') { %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Thanks for contacting us!</strong> Your message was sent successfully.
+            <strong>Thanks for requesting a quote!</strong> We received your request and will contact you shortly.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
-    
-    <!-- Error Message -->
+
     <% if (error && error === 'true') { %>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Sorry,</strong> your message could not be sent. Please try again.
+            <strong>Sorry,</strong> we couldn't send your quote request. Please try again.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
 
     <div class="row">
-        <div class="col-md-6">
-            <form action="/contact" method="POST">
-                <!-- Name Field -->
-                <div class="mb-3">
-                    <label class="form-label">Name*</label>
-                    <input type="text" class="form-control <%= errors?.some(e => e.path === 'name') ? 'is-invalid' : '' %>" 
-                           name="name" value="<%= formData?.name || '' %>" required>
-                    <% if (errors?.some(e => e.path === 'name')) { %>
-                        <div class="invalid-feedback">
-                            <%= errors.find(e => e.path === 'name').msg %>
-                        </div>
-                    <% } %>
-                </div>
+        <div class="col-lg-7 col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form action="/contact" method="POST" novalidate>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label">Full Name*</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
 
-                <!-- Email Field -->
-                <div class="mb-3">
-                    <label class="form-label">Email*</label>
-                    <input type="email" class="form-control <%= errors?.some(e => e.path === 'email') ? 'is-invalid' : '' %>" 
-                           name="email" value="<%= formData?.email || '' %>" required>
-                    <% if (errors?.some(e => e.path === 'email')) { %>
-                        <div class="invalid-feedback">
-                            <%= errors.find(e => e.path === 'email').msg %>
-                        </div>
-                    <% } %>
-                </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phone*</label>
+                                <input type="tel" name="phone" class="form-control" required>
+                            </div>
 
-                <!-- Phone Field -->
-                <div class="mb-3">
-                    <label class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control <%= errors?.some(e => e.path === 'phone') ? 'is-invalid' : '' %>" 
-                           name="phone" value="<%= formData?.phone || '' %>">
-                    <% if (errors?.some(e => e.path === 'phone')) { %>
-                        <div class="invalid-feedback">
-                            <%= errors.find(e => e.path === 'phone').msg %>
-                        </div>
-                    <% } %>
-                </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email*</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
 
-        <!-- Message Field -->
-        <div class="mb-3">
-            <label class="form-label">Message*</label>
-                <textarea id="message-editor" class="form-control" name="message" required><%= formData?.message || '' %></textarea>
-            <% if (errors?.some(e => e.path === 'message')) { %>
-                <div class="invalid-feedback d-block">
-                <%= errors.find(e => e.path === 'message').msg %>
+                            <div class="col-md-6">
+                                <label class="form-label">Service Type*</label>
+                                <select name="serviceType" class="form-select" required>
+                                    <option value="">Choose one...</option>
+                                    <option value="Standard Cleaning">Standard Cleaning</option>
+                                    <option value="Deep Cleaning">Deep Cleaning</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Frequency</label>
+                                <select name="frequency" class="form-select">
+                                    <option value="One-time">One-time</option>
+                                    <option value="Weekly">Weekly</option>
+                                    <option value="Bi-weekly">Bi-weekly</option>
+                                    <option value="Monthly">Monthly</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Number of Bedrooms</label>
+                                <select name="bedrooms" class="form-select">
+                                    <option value="Studio">Studio</option>
+                                    <option value="1 Bedroom">1 Bedroom</option>
+                                    <option value="2 Bedrooms">2 Bedrooms</option>
+                                    <option value="3 Bedrooms">3 Bedrooms</option>
+                                    <option value="4+ Bedrooms">4+ Bedrooms</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Number of Bathrooms</label>
+                                <select name="bathrooms" class="form-select">
+                                    <option value="1 Bathroom">1 Bathroom</option>
+                                    <option value="2 Bathrooms">2 Bathrooms</option>
+                                    <option value="3 Bathrooms">3 Bathrooms</option>
+                                    <option value="4+ Bathrooms">4+ Bathrooms</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Notes / Message (optional)</label>
+                                <textarea name="message" class="form-control" rows="5" placeholder="Any special notes or details."></textarea>
+                            </div>
+
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-primary" onclick="this.innerText='Sending...'; this.disabled=true;">Get My Quote</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            <% } %>
             </div>
-
-                <button type="submit" class="btn btn-primary" onclick="this.innerText='Sending...'; this.disabled=true;">Send Message</button>
-            </form>
         </div>
-        
-        <div class="col-md-6">
+
+        <div class="col-lg-5 col-md-4">
             <div class="card h-100">
                 <div class="card-body">
                     <h4 class="card-title">Contact Information</h4>
