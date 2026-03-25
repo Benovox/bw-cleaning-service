@@ -313,15 +313,15 @@
 
 /* Enhanced carousel styling */
 .carousel-item {
-  height: 70vh;
-  max-height: 600px;
+  height: 60vh;
+  max-height: 550px;
 }
 
 .carousel-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
   filter: brightness(0.6);
 }
 
@@ -436,6 +436,6 @@
   }
 
   .carousel-item {
-    height: 50vh;
+    height: 45vh;
   }
 }
