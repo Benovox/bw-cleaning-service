@@ -466,3 +466,88 @@
   object-fit: cover;
   width: 100%;
 }
+
+/*==============================
+  8. Portfolio Page Styles
+==============================*/
+
+.portfolio-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.portfolio-page .hero-section {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+}
+
+.portfolio-img {
+  max-height: 300px;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-img:hover {
+  transform: scale(1.02);
+}
+
+.portfolio-item {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;
+}
+
+/* Trust building icons */
+.bg-primary.bg-opacity-10 {
+  background-color: rgba(0, 123, 255, 0.1) !important;
+}
+
+/* Services cards */
+.portfolio-page .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-page .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .portfolio-page .hero-section {
+    min-height: 30vh;
+    padding: 3rem 0;
+  }
+
+  .portfolio-page .display-4 {
+    font-size: 2.5rem;
+  }
+
+  .portfolio-page .display-5 {
+    font-size: 2rem;
+  }
+
+  .portfolio-img {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  .portfolio-page .display-4 {
+    font-size: 2rem;
+  }
+
+  .portfolio-page .display-5 {
+    font-size: 1.8rem;
+  }
+
+  .portfolio-img {
+    max-height: 200px;
+  }
+}
