@@ -456,3 +456,13 @@
     font-size: 0.75rem;
   }
 }
+
+/*==============================
+  7. Cleaning Services Section Image
+==============================*/
+
+.cleaning-services-image {
+  max-height: 400px;
+  object-fit: cover;
+  width: 100%;
+}
