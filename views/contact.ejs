@@ -1,18 +1,18 @@
 <%- include('partials/header') %>
 <main class="container mt-5">
-    <h2 class="mb-1">Get a Quote</h2>
-    <p class="text-muted mb-4">Tell us about your home and cleaning needs.</p>
+    <h2 class="mb-1">Get Your Free Cleaning Quote</h2>
+    <p class="text-muted mb-4">No obligation. No surprises. Just a fair quote based on your specific needs. We'll contact you within 24 hours.</p>
 
     <% if (success && success === 'true') { %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Thanks for requesting a quote!</strong> We received your request and will contact you shortly.
+            <strong>Quote Request Received!</strong> Thanks for choosing B&W Cleaning. We'll review your details and contact you shortly with a personalized quote.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
 
     <% if (error && error === 'true') { %>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Sorry,</strong> we couldn't send your quote request. Please try again.
+            <strong>Oops!</strong> We encountered an issue sending your request. Please try again or call us at 857-385-2270.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
@@ -21,6 +21,7 @@
         <div class="col-lg-7 col-md-8">
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
+                    <p class="text-muted mb-4"><small>All fields marked with <strong>*</strong> are required.</small></p>
                     <form action="/contact" method="POST" novalidate>
                         <div class="row g-3">
                             <div class="col-12">
@@ -84,7 +85,7 @@
                             </div>
 
                             <div class="col-12 text-end">
-                                <button type="submit" id="submitBtn" class="btn btn-primary">Get My Quote</button>
+                                <button type="submit" id="submitBtn" class="btn btn-primary">Send Quote Request</button>
                             </div>
                         </div>
                     </form>
@@ -112,23 +113,38 @@
         <div class="col-lg-5 col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h4 class="card-title">Contact Information</h4>
-                    <div class="mb-3">
-                        <i class="bi bi-geo-alt-fill me-2"></i>
-                        <span>123 Howard Ave, Dorchester, MA</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="bi bi-telephone-fill me-2"></i>
-                        <span>857-385-2270</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="bi bi-envelope-fill me-2"></i>
-                        <span>leiteruiz37@gmail.com</span>
+                    <h4 class="card-title mb-4">Get in Touch</h4>
+                    <div class="mb-4">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-geo-alt-fill text-primary me-3 mt-1"></i>
+                            <div>
+                                <strong>Location</strong><br>
+                                <span class="text-muted">123 Howard Ave, Dorchester, MA</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-telephone-fill text-primary me-3 mt-1"></i>
+                            <div>
+                                <strong>Phone</strong><br>
+                                <span class="text-muted"><a href="tel:857-385-2270" class="text-decoration-none">857-385-2270</a></span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-envelope-fill text-primary me-3 mt-1"></i>
+                            <div>
+                                <strong>Email</strong><br>
+                                <span class="text-muted"><a href="mailto:leiteruiz37@gmail.com" class="text-decoration-none">leiteruiz37@gmail.com</a></span>
+                            </div>
+                        </div>
                     </div>
                     <hr>
-                    <h5>Business Hours</h5>
-                    <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
-                    <p>Saturday: 9:00 AM - 5:00 PM</p>
+                    <h5 class="fw-bold mb-3">Our Hours</h5>
+                    <p class="text-muted mb-2"><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</p>
+                    <p class="text-muted"><strong>Saturday:</strong> 9:00 AM - 5:00 PM</p>
+                    <p class="text-muted"><em>Closed Sundays</em></p>
+                    <div class="alert alert-info mt-4" role="alert">
+                        <strong>Guarantee:</strong> We're confident you'll love our work. If you're not 100% satisfied, we'll make it right.
+                    </div>
                 </div>
             </div>
         </div>
