@@ -54,17 +54,13 @@ exports.submitContact = async (req, res) => {
 
     const emailResponse = await resend.emails.send(emailPayload);
 
-    if (emailResponse.error) {
-      console.error('Contact submission error: Resend API returned error', emailResponse.error);
+    const successId = emailResponse?.id || emailResponse?.data?.id;
+    if (emailResponse?.error || !successId) {
+      console.error('Contact submission error: Resend API returned error/unexpected response', emailResponse);
       return res.redirect('/contact?error=true');
     }
 
-    if (emailResponse.data && emailResponse.data.id) {
-      return res.redirect('/contact?success=true');
-    }
-
-    console.error('Contact submission error: unexpected Resend response', emailResponse);
-    return res.redirect('/contact?error=true');
+    return res.redirect('/contact?success=true');
 
   } catch (error) {
     console.error('Contact submission error:', error.message);

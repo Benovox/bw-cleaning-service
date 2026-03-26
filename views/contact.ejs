@@ -84,10 +84,27 @@
                             </div>
 
                             <div class="col-12 text-end">
-                                <button type="submit" class="btn btn-primary" onclick="this.innerText='Sending...'; this.disabled=true;">Get My Quote</button>
+                                <button type="submit" id="submitBtn" class="btn btn-primary">Get My Quote</button>
                             </div>
                         </div>
                     </form>
+                    <script>
+                        (function() {
+                            const form = document.querySelector('form[action="/contact"][method="POST"]');
+                            const submitBtn = document.getElementById('submitBtn');
+
+                            if (!form || !submitBtn) return;
+
+                            form.addEventListener('submit', function(event) {
+                                if (!form.checkValidity()) {
+                                    return;
+                                }
+
+                                submitBtn.disabled = true;
+                                submitBtn.innerText = 'Sending...';
+                            });
+                        })();
+                    </script>
                 </div>
             </div>
         </div>
